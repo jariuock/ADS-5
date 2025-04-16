@@ -3,6 +3,7 @@
 #include <map>
 #include "tstack.h"
 
+
 int precedence(char op) {
     static const std::map<char, int> precedenceMap = {
         {'+', 1},
@@ -34,14 +35,20 @@ std::string infx2pstfx(const std::string& inf) {
             result += ' '; 
             --i; 
         }
-
+ 
         else if (ch == '(') {
-            stack.push(ch);
+            if (!stack.push(ch)) {
+                return ""; 
+            }
         }
+        
         else if (ch == ')') {
             while (!stack.isEmpty() && stack.top() != '(') {
                 result += stack.pop();
                 result += ' ';
+            }
+            if (stack.isEmpty()) {
+                return ""; 
             }
             stack.pop(); 
         }
@@ -51,7 +58,9 @@ std::string infx2pstfx(const std::string& inf) {
                 result += stack.pop();
                 result += ' ';
             }
-            stack.push(ch);
+            if (!stack.push(ch)) {
+                return "";
+            }
         }
     }
 
@@ -94,19 +103,36 @@ int eval(const std::string& post) {
         const std::string& token = tokens[i];
 
         if (isDigit(token[0])) {
-            stack.push(std::stoi(token));
+            int value = 0;
+            for (char ch : token) {
+                value = value * 10 + (ch - '0');
+            }
+            if (!stack.push(value)) {
+                return -1; 
+            }
         }
         else {
 
             int b = stack.pop();
             int a = stack.pop();
 
-            switch (token[0]) {
-            case '+': stack.push(a + b); break;
-            case '-': stack.push(a - b); break;
-            case '*': stack.push(a * b); break;
-            case '/': stack.push(a / b); break;
-            default: throw std::runtime_error("Unknown operator");
+            if (token[0] == '+') {
+                stack.push(a + b);
+            }
+            else if (token[0] == '-') {
+                stack.push(a - b);
+            }
+            else if (token[0] == '*') {
+                stack.push(a * b);
+            }
+            else if (token[0] == '/') {
+                if (b == 0) {
+                    return -1; 
+                }
+                stack.push(a / b);
+            }
+            else {
+                return -1; 
             }
         }
     }
