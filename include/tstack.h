@@ -6,8 +6,8 @@ template<typename T, int size>
 class TStack {
 
 private:
-    T data[N];
-    int topIndex;
+    T data[N]; 
+    int topIndex; 
 
 public:
     TStack() : topIndex(-1) {}
@@ -20,26 +20,27 @@ public:
         return topIndex == N - 1;
     }
 
-    void push(const T& value) {
+    bool push(const T& value) {
         if (isFull()) {
-            throw std::overflow_error("Stack overflow");
+            return false; 
         }
         data[++topIndex] = value;
+        return true;
     }
 
     T pop() {
         if (isEmpty()) {
-            throw std::underflow_error("Stack underflow");
+            return T();
         }
         return data[topIndex--];
     }
 
     T top() const {
         if (isEmpty()) {
-            throw std::underflow_error("Stack is empty");
+            return T(); 
         }
         return data[topIndex];
     }
 };
 
-#endif  // INCLUDE_TSTACK_H_
+#endif  
