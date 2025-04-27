@@ -4,43 +4,28 @@
 
 template<typename T, int size>
 class TStack {
-
 private:
-    T data[N]; 
-    int topIndex; 
-
+    T arr[size];
+    int top;
 public:
-    TStack() : topIndex(-1) {}
-
-    bool isEmpty() const {
-        return topIndex == -1;
+    TStack() : top(-1) {}
+    void push(const T& value) {
+        if (top < size - 1)
+            arr[++top] = value;
     }
-
-    bool isFull() const {
-        return topIndex == N - 1;
-    }
-
-    bool push(const T& value) {
-        if (isFull()) {
-            return false; 
-        }
-        data[++topIndex] = value;
-        return true;
-    }
-
     T pop() {
-        if (isEmpty()) {
-            return T();
-        }
-        return data[topIndex--];
+        if (top >= 0)
+            return arr[top--];
+        return T(); 
     }
-
-    T top() const {
-        if (isEmpty()) {
-            return T(); 
-        }
-        return data[topIndex];
+    T peek() const {
+        if (top >= 0)
+            return arr[top];
+        return T();
+    }
+    bool isEmpty() const {
+        return top == -1;
     }
 };
 
-#endif  
+#endif
