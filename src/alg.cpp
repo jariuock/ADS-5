@@ -20,11 +20,9 @@ std::string infx2pstfx(const std::string& inf) {
             }
             post += ' ';
             i--;
-        }
-        else if (inf[i] == '(') {
+        } else if (inf[i] == '(') {
             stack.push('(');
-        }
-        else if (inf[i] == ')') {
+        } else if (inf[i] == ')') {
             while (!stack.isEmpty() && stack.peek() != '(') {
                 post += stack.pop();
                 post += ' ';
@@ -32,7 +30,10 @@ std::string infx2pstfx(const std::string& inf) {
             if (!stack.isEmpty())
                 stack.pop();
         }
-        else if (inf[i] == '+' || inf[i] == '-' || inf[i] == '*' || inf[i] == '/') {
+        else if (inf[i] == '+' ||
+            inf[i] == '-' ||
+            inf[i] == '*' ||
+            inf[i] == '/') {
             while (!stack.isEmpty() &&
                 getPriority(stack.peek()) >= getPriority(inf[i])) {
                 post += stack.pop();
@@ -61,8 +62,7 @@ int eval(const std::string& post) {
                 i++;
             }
             stack.push(num);
-        }
-        else if (post[i] == '+' ||
+        } else if (post[i] == '+' ||
             post[i] == '-' ||
             post[i] == '*' ||
             post[i] == '/') {
@@ -75,8 +75,7 @@ int eval(const std::string& post) {
             else if (post[i] == '/') res = a / b;
             stack.push(res);
             i++;
-        }
-        else {
+        } else {
             i++;
         }
     }
