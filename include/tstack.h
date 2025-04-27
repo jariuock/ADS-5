@@ -4,10 +4,11 @@
 
 template<typename T, int size>
 class TStack {
-private:
+ private:
     T data[size];
     int topIndex;
-public:
+
+ public:
     TStack() : topIndex(-1) {}
 
     bool isEmpty() const {
@@ -38,4 +39,4 @@ public:
     }
 };
 
-#endif
+#endif // INCLUDE_TSTACK_H_
