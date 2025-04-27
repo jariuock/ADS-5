@@ -13,8 +13,8 @@ std::string infx2pstfx(const std::string& inf) {
     TStack<char, 100> stack;
     std::string post;
     for (size_t i = 0; i < inf.length(); ++i) {
-        if (inf[i] >= '0' && inf[i] <= '9') { 
-            while (i < inf.length() && inf[i] >= '0' && inf[i] <= '9') { 
+        if (inf[i] >= '0' && inf[i] <= '9') {
+            while (i < inf.length() && inf[i] >= '0' && inf[i] <= '9') {
                 post += inf[i];
                 i++;
             }
@@ -33,7 +33,8 @@ std::string infx2pstfx(const std::string& inf) {
                 stack.pop();
         }
         else if (inf[i] == '+' || inf[i] == '-' || inf[i] == '*' || inf[i] == '/') {
-            while (!stack.isEmpty() && getPriority(stack.peek()) >= getPriority(inf[i])) {
+            while (!stack.isEmpty() &&
+                getPriority(stack.peek()) >= getPriority(inf[i])) {
                 post += stack.pop();
                 post += ' ';
             }
@@ -53,15 +54,18 @@ int eval(const std::string& post) {
     TStack<int, 100> stack;
     size_t i = 0;
     while (i < post.length()) {
-        if (post[i] >= '0' && post[i] <= '9') { 
+        if (post[i] >= '0' && post[i] <= '9') {
             int num = 0;
-            while (i < post.length() && post[i] >= '0' && post[i] <= '9') { 
+            while (i < post.length() && post[i] >= '0' && post[i] <= '9') {
                 num = num * 10 + (post[i] - '0');
                 i++;
             }
             stack.push(num);
         }
-        else if (post[i] == '+' || post[i] == '-' || post[i] == '*' || post[i] == '/') {
+        else if (post[i] == '+' ||
+            post[i] == '-' ||
+            post[i] == '*' ||
+            post[i] == '/') {
             int b = stack.pop();
             int a = stack.pop();
             int res = 0;
