@@ -29,8 +29,7 @@ std::string infx2pstfx(const std::string& inf) {
             }
             if (!stack.isEmpty())
                 stack.pop();
-        }
-        else if (inf[i] == '+' ||
+        } else if (inf[i] == '+' ||
             inf[i] == '-' ||
             inf[i] == '*' ||
             inf[i] == '/') {
