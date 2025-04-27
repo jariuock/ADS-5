@@ -5,7 +5,8 @@
 template<typename T, int size>
 class TStack {
  private:
-    T data[size];
+    static const int kStackSize = size;
+    T data[kStackSize];
     int topIndex;
 
  public:
